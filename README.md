@@ -1,0 +1,4 @@
+- This directory contains all the labs we do in IOT lab.
+- You should create your own branch after clone it to your laptop, it's branch linh in my case
+- Be careful when merge to master, I set rule to just allow merge to master if all 4 viewers agree
+- TA requires all of us can do 4 first labs, so please practice it
