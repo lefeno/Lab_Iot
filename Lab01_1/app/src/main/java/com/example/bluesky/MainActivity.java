@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
             mLedGpioB = manager.openGpio(ledPinB);
             mLedGpioB.setDirection(Gpio.DIRECTION_OUT_INITIALLY_HIGH);
 
-            Log.d(TAG, "On create");
+            Log.d(TAG, "On  create");
             String ledPinG = BoardDefaults.getGPIOForLedG();
 //          Config for Led, output, high
             mLedGpioG = manager.openGpio(ledPinG);
