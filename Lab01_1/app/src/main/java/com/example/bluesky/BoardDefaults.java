@@ -1,11 +1,11 @@
-package com.example.bluesky.lab01_1;
+package com.example.bluesky;
 
 import android.os.Build;
 
-public class BoardDefault {
+public class BoardDefaults {
     private static final String DEVICE_RPI3 = "rpi3";
 
-    public static String getGPIOforLedB(){
+    public static String getGPIOForLedB(){
         switch (Build.DEVICE) {
             case DEVICE_RPI3:
                 return "BCM2";
@@ -14,7 +14,7 @@ public class BoardDefault {
         }
     }
 
-    public static String getGPIOforLedR(){
+    public static String getGPIOForLedR(){
         switch(Build.DEVICE){
             case DEVICE_RPI3:
                 return "BCM3";
@@ -23,7 +23,7 @@ public class BoardDefault {
         }
     }
 
-    public static String getGPIOforLedG(){
+    public static String getGPIOForLedG(){
         switch(Build.DEVICE){
             case DEVICE_RPI3:
                 return "BCM4";
