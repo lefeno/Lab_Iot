@@ -107,7 +107,7 @@ public class MainActivity extends Activity {
         mHandler.removeCallbacks(mChangePWMRunnable);
         Log.i(TAG,"Closing port");
 
-        if(mPwm != null){
+        if(mPwm != null || mLedGpioR != null || mLedGpioB != null || mLedGpioG != null){
             try{
                 mPwm.close();
                 mLedGpioB.close();
@@ -117,6 +117,9 @@ public class MainActivity extends Activity {
                 Log.w(TAG,"Unable to close PWM",e);
             } finally {
                 mPwm = null;
+                mLedGpioR = null;
+                mLedGpioG = null;
+                mLedGpioB = null;
             }
         }
     }
