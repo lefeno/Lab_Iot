@@ -39,10 +39,9 @@ public class MainActivity extends Activity {
     private Gpio mLedGpioR, mLedGpioG, mLedGpioB, mButtonGpio;
 
     private static int intervalBetweenBlink = 2000;
-    private static int timeState = 3;
-    private static final int INTERVAL_05s = 1;
-    private static final int INTERVAL_1s = 2;
-    private static final int INTERVAL_2s = 3;
+    private static final int INTERVAL_05s = 500;
+    private static final int INTERVAL_1s = 1000;
+    private static final int INTERVAL_2s = 2000;
 
     private Handler mHandler = new Handler();
 
@@ -67,23 +66,20 @@ public class MainActivity extends Activity {
                 @Override
                 public boolean onGpioEdge(Gpio gpio) {
                     Log.i(TAG, "Button pressed");
-                    switch(timeState){
+                    switch(intervalBetweenBlink){
                         case INTERVAL_2s:
                             intervalBetweenBlink = 1000;
                             Log.i(TAG,"Blink in 1s");
-                            timeState = INTERVAL_1s;
                             break;
 
                         case INTERVAL_1s:
                             intervalBetweenBlink = 500;
                             Log.i(TAG,"Blink in 0.5s");
-                            timeState = INTERVAL_05s;
                             break;
 
                         case INTERVAL_05s:
                             intervalBetweenBlink = 2000;
                             Log.i(TAG,"Blink in 2s");
-                            timeState = INTERVAL_2s;
                             break;
                         default:
                             throw new IllegalStateException("State is incorrect");
