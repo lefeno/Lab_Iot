@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.android.things.pio.Gpio;
 import com.google.android.things.pio.PeripheralManager;
 import com.google.android.things.pio.Pwm;
 
@@ -38,10 +39,22 @@ public class MainActivity extends Activity {
     private static final double PULSE_PERIOD_MS = 20;   // Frequency of 50Hz (1000/20)
 
     private static final double PULSE_CHANGE_PER_STEP_MS = 0.2;
-    private static final int INTERVAL_BETWEEN_STEPS_MS = 100;
+    private static final int INTERVAL_BETWEEN_STEPS_MS = 50;
 
-    private static final String PWM_NAME = BoardDefaults.getPwmPin();
+    private static final int LED_RED = 1;
+    private static final int LED_GREEN = 2;
+    private static final int LED_BLUE = 3;
+    private int mLedState = LED_RED;
+    private Gpio mLedGpioR, mLedGpioG, mLedGpioB;
+    private static final String PWM_NAME = BoardDefaults.getLedPin();
+    private static int i = 0;
+
     private Pwm mPwm;
+
+    private boolean mLedStateR = true;
+    private boolean mLedStateG = true;
+    private boolean mLedStateB = true;
+
     private Handler mHandler = new Handler();
     private boolean mIsPulseIncreasing = true;
     private double mActivePulseDuration;
@@ -68,6 +81,19 @@ public class MainActivity extends Activity {
             mPwm.setEnabled(true);
 
             Log.d(TAG,"Stat changing PWM pulse");
+
+            String ledB = BoardDefaults.getLedBPin();
+            mLedGpioB = manager.openGpio(ledB);
+            mLedGpioB.setDirection(Gpio.DIRECTION_OUT_INITIALLY_HIGH);
+
+            String ledG = BoardDefaults.getLedGPin();
+            mLedGpioG = manager.openGpio(ledG);
+            mLedGpioG.setDirection(Gpio.DIRECTION_OUT_INITIALLY_HIGH);
+
+            String ledR = BoardDefaults.getLedRPin();
+            mLedGpioR = manager.openGpio(ledR);
+            mLedGpioR.setDirection(Gpio.DIRECTION_OUT_INITIALLY_HIGH);
+
             mHandler.post(mChangePWMRunnable);
         } catch (IOException e){
             Log.w(TAG,"Error on IOException: ",e);
@@ -84,6 +110,9 @@ public class MainActivity extends Activity {
         if(mPwm != null){
             try{
                 mPwm.close();
+                mLedGpioB.close();
+                mLedGpioG.close();
+                mLedGpioR.close();
             } catch(IOException e){
                 Log.w(TAG,"Unable to close PWM",e);
             } finally {
@@ -95,7 +124,7 @@ public class MainActivity extends Activity {
     private Runnable mChangePWMRunnable = new Runnable() {
         @Override
         public void run() {
-            if(mPwm == null){
+            if(mPwm == null || mLedGpioG == null || mLedGpioR == null || mLedGpioB == null){
                 Log.w(TAG,"Stop runnable since mPwm is null");
                 return;
             }
@@ -114,9 +143,42 @@ public class MainActivity extends Activity {
                 mIsPulseIncreasing = !mIsPulseIncreasing;
             }
 
-            Log.d(TAG,"Changing PWM active pulse duration to " + mActivePulseDuration + "ms");
+//            Log.d(TAG,"Changing PWM active pulse duration to " + mActivePulseDuration + "ms");
 
             try {
+                ++i;
+                if(i == 60) {
+                    switch (mLedState) {
+                        case LED_RED:
+                            mLedState = LED_GREEN;
+                            mLedStateR = false;
+                            mLedStateG = true;
+                            mLedStateB = true;
+                            break;
+                        case LED_GREEN:
+                            mLedState = LED_BLUE;
+                            mLedStateG = false;
+                            mLedStateB = true;
+                            mLedStateR = true;
+                            break;
+                        case LED_BLUE:
+                            mLedState = LED_RED;
+                            mLedStateB = false;
+                            mLedStateG = true;
+                            mLedStateR = true;
+                            break;
+                        default:
+                            throw new IllegalStateException("error");
+                    }
+
+                    i = 0;
+                    mLedGpioG.setValue(mLedStateG);
+                    mLedGpioR.setValue(mLedStateR);
+                    mLedGpioB.setValue(mLedStateB);
+                    Log.d(TAG, "Change state" + " red: " + mLedStateR+ " green: " + mLedStateG+ " blue: " + mLedStateB);
+                    mActivePulseDuration = MIN_ACTIVE_PULSE_DURATION_MS;
+//                }
+                }
                 mPwm.setPwmDutyCycle(100*mActivePulseDuration/PULSE_PERIOD_MS);
                 mHandler.postDelayed(this, INTERVAL_BETWEEN_STEPS_MS);
             } catch (IOException e){
