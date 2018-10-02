@@ -278,6 +278,7 @@ public class MainActivity extends Activity {
         if (in == 'F') {
             Log.d(TAG, "App stops any running");
             mStateApp = S_STOP;
+            reset();
         }
 
         if (mStateApp != S_STOP) {
@@ -443,7 +444,7 @@ public class MainActivity extends Activity {
                 return;
             }
             changeLedState();
-            if (mStateApp == S_GET1 || mStateApp == S_GET1) {
+            if (mStateApp == S_GET1 || mStateApp == S_GET2) {
                 mHandler.postDelayed(mEx12, intervalBetweenBlink);
             }
         }
@@ -531,6 +532,18 @@ public class MainActivity extends Activity {
     }
 
     private void reset(){
-
+        mHandler.removeCallbacks(mEx12);
+        mHandler.removeCallbacks(mEx34);
+        mHandler.removeCallbacks(mRunnableLedR);
+        mHandler.removeCallbacks(mRunnableLedG);
+        mHandler.removeCallbacks(mRunnableLedB);
+        try {
+            mLedGpioB.setValue(true);
+            mLedGpioG.setValue(true);
+            mLedGpioR.setValue(true);
+            mPwm.setPwmDutyCycle(100);
+        } catch (IOException e){
+            Log.d(TAG,"IO exception",e);
+        }
     }
 }
