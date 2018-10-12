@@ -1,20 +1,11 @@
-package com.example.bluesky.lab01_2;
+package com.example.bluesky.lab01_3;
 
 import android.os.Build;
 
 public class BoardDefaults {
     private static final String DEVICE_RPI3 = "rpi3";
 
-    public static String getGPIOForLedB(){
-        switch (Build.DEVICE) {
-            case DEVICE_RPI3:
-                return "BCM2";
-            default:
-                throw new IllegalStateException("Unknown Build.DEVICE " + Build.DEVICE);
-        }
-    }
-
-    public static String getGPIOForLedR(){
+    public static String getLedRPin(){
         switch(Build.DEVICE){
             case DEVICE_RPI3:
                 return "BCM3";
@@ -23,7 +14,7 @@ public class BoardDefaults {
         }
     }
 
-    public static String getGPIOForLedG(){
+    public static String getLedGPin(){
         switch(Build.DEVICE){
             case DEVICE_RPI3:
                 return "BCM4";
@@ -32,13 +23,22 @@ public class BoardDefaults {
         }
     }
 
-    public static String getGPIOForButton(){
+    public static String getLedBPin(){
+        switch (Build.DEVICE){
+            case DEVICE_RPI3:
+                return "BCM2";
+            default:
+                throw new IllegalStateException("Unknown Build.DEVICE " + Build.DEVICE);
+        }
+    }
+
+    public static String getLedPin(){
         switch(Build.DEVICE){
             case DEVICE_RPI3:
-                return "BCM5";
+                return "PWM0";
+
             default:
                 throw new IllegalStateException("Unknown Build.DEVICE " + Build.DEVICE);
         }
     }
 }
-
