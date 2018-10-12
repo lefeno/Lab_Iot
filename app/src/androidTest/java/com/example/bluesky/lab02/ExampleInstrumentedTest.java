@@ -1,4 +1,4 @@
-package com.example.bluesky.lab01_5;
+package com.example.bluesky.lab02;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.bluesky.lab01_5", appContext.getPackageName());
+        assertEquals("com.example.bluesky.lab02", appContext.getPackageName());
     }
 }
