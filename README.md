@@ -1,16 +1,17 @@
-# Exercise 1.2
 
-Get input from a button and then change the pace of color displaying (ex 1). Foexample, the RGB LED changes colors in 2s by default. After a button is pressed, the rate will change to 1s, then 0.5s, 0.1s and back to 2s.
+# Exercise 1.3
+
+Control the RGB LED by using PWM to change the brightness of the led. 
 
 ## Authors
 
-* **Nguyen Luong Phuc Vinh _ 1514063**
+* **Nguyen Van Minh - 1512009**
 
 ## Getting Started
 
 Please follow the general instructions for all exercises mentioned above.
 
-In this exercise, we will use RGB Led Common Cathode, with I is the common pin and a button for changing interval time between color changes.
+In this exercise, we will use RGB Led Common Cathode, with I is the common pin. We will use the PWM pulse to change the brightness of the LED.
 
 ### Prerequisites
 
@@ -22,13 +23,9 @@ In this exercise, we will use RGB Led Common Cathode, with I is the common pin a
 
 1 Breadboard
 
-1 Button
-
-Interval Timer: a timer that requires a defined amount of time for RGB LED to change color.
-
 **GPIO Connection Diagram**
 
-![alt text](https://github.com/lefeno/lab_iot/blob/vinh/Images/%5B1.1%5D%20Diagram.png)
+![alt text](https://github.com/lefeno/lab_iot/blob/vinh/Images/%5B1.3%5D%20PWM.PNG)
 
 **GPIO Connection Table:**
 
@@ -37,15 +34,11 @@ Interval Timer: a timer that requires a defined amount of time for RGB LED to ch
 |BCM2|B pin| 
 BCM3|R pin
 BCM4|G pin
-BCM5|Button 
+PWM0|I pin 
 
-### State chart diagram
+### Operational principles
 
-This state chart demonstrate how interval timer works. When we press a button, the interval timer change in order: 1s, 0.5s, 0.1s and then back to 2s
-![alt text](https://github.com/lefeno/lab_iot/blob/vinh/Images/%5B1.2%5D%20Interval%20change.png)
-
-The following state chart shows the change of color whenever the interval timer count down to 0.
-![alt text](https://github.com/lefeno/lab_iot/blob/vinh/Images/%5B1.2%5D%20State%20Interval.png)
+By changing the width of PWM pulse , we change the luminance of the LED.
 
 ## License
 
