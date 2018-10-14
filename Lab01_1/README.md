@@ -10,10 +10,16 @@ Please follow the general instructions for all exercises mentioned above.
 In this exercise, we will use RGB Led Common Cathode, with I is the common pin.
 
  ### Pre-requisites
-1 LED
+ 
+1 RGB LED
+
 1 resistor
-2 Jumper Wires
+
+6 Jumper Wires
+
 1 Breadboard
+
+1 Raspberry Pi 3
 
 **GPIO Connection Diagram**
  ![N|Connection](https://github.com/lefeno/lab_iot/blob/vinh/Images/%5B1.1%5D%20Diagram.png)
