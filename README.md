@@ -1,7 +1,7 @@
+# Exercise 1.5
 
-# Exercise 1.4
-
-Get input from a button and change the brightness of each color of the RGB LED. For example, the RGB LED changes the brightness of red, green, blue by default. After a button is pressed, only the red one is changing its brightness, then green, blue and back to three colors.
+Blink each LED in different paces. The red LED is blinking every 0.5s, the green is 2s,
+and the blue is 3s.
 
 ## Authors
 
@@ -11,19 +11,17 @@ Get input from a button and change the brightness of each color of the RGB LED. 
 
 Please follow the general instructions for all exercises mentioned above.
 
-In this exercise, we will use RGB Led Common Cathode, with I is the common pin and a button for changing the brightness of each color of the RGB LED.
-
+In this exercise, we will use RGB Led Common Cathode, with I is the common pin.
 ### Prerequisites
 
 1 RGB LED
 
 1 resistor
 
-8 Jumper Wires
+7 Jumper Wires
 
 1 Breadboard
 
-1 Button
 
 **GPIO Connection Diagram**
 
@@ -39,15 +37,9 @@ BCM4|G pin
 PWM0|I pin 
 BCM5|Button 
 
-### State chart diagram
+### Operational Principle
 
-This state chart below is used when we press a button, it will determine which led will change the brightness, which will not, for example, if state is STATE_RED, only led RED will change its brightness. The STATE_LED indicates 3 leds will change their brightness.
-
-![alt text](https://github.com/lefeno/lab_iot/blob/linh/FC_1.PNG)
-
-This state chart below is used to change led from red to green, and then blue based on a specific time after we pressed the button. Here for simplicity, we use a count variable that will count up to 60 for timer_flag. Based on the current state (STATE_RED, STATE_GREEN,...) the duty cycle will be 100 or gradually change for each LED_RED, LED_GREEN or LED_BLUE.
-
-![alt text](https://github.com/lefeno/lab_iot/blob/linh/FC_2.PNG)
+For every different timer, the LED color will blink accordingly.
 
 ## License
 

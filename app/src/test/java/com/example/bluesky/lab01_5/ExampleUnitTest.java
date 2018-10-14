@@ -1,4 +1,4 @@
-package com.example.bluesky.lab01_4;
+package com.example.bluesky.lab01_5;
 
 import org.junit.Test;
 
