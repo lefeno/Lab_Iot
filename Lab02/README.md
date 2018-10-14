@@ -29,9 +29,9 @@ and run corresponding exercises above. The commands are detailed as follows:
 ## Authors
 
 * **Ta Huynh Thuy Linh _ 1511778**
-* **Nguyen Luong Phuc Vinh _ 1511778**
-* **Tui Nhat Quang _ 1511778**
-* **Nguyen Van Minh _ 1511778**
+* **Nguyen Luong Phuc Vinh _ 1514063**
+* **Tui Nhat Quang _ 1512664**
+* **Nguyen Van Minh _ 1512009**
 
 ## Getting Started
 

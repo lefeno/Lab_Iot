@@ -25,7 +25,7 @@ In this exercise, we will use RGB Led Common Cathode, with I is the common pin. 
 
 **GPIO Connection Diagram**
 
-![alt text](PWM.png)
+![alt text](https://github.com/lefeno/lab_iot/blob/vinh/Images/%5B1.3%5D%20PWM.PNG)
 
 **GPIO Connection Table:**
 
