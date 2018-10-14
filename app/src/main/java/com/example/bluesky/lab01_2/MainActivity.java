@@ -1,4 +1,4 @@
-package com.example.bluesky;
+package com.example.bluesky.lab01_2;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,10 +6,10 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.google.android.things.pio.Gpio;
+import com.google.android.things.pio.GpioCallback;
 import com.google.android.things.pio.PeripheralManager;
 
 import java.io.IOException;
-import java.lang.ref.PhantomReference;
 
 /**
  * Skeleton of an Android Things activity.
@@ -36,8 +36,13 @@ public class MainActivity extends Activity {
     private static final int LED_GREEN = 2;
     private static final int LED_BLUE = 3;
     private int mLedState = LED_RED;
-    private Gpio mLedGpioR, mLedGpioG, mLedGpioB;
-    private static final int INTERVAL_BETWEEN_BLINKS_MS = 1000;
+    private Gpio mLedGpioR, mLedGpioG, mLedGpioB, mButtonGpio;
+
+    private static int intervalBetweenBlink = 2000;
+    private static final int INTERVAL_05s = 500;
+    private static final int INTERVAL_1s = 1000;
+    private static final int INTERVAL_2s = 2000;
+
     private Handler mHandler = new Handler();
 
     private boolean mLedStateR = true;
@@ -49,6 +54,40 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         try {
             PeripheralManager manager = PeripheralManager.getInstance();
+
+            String buttonPin = BoardDefaults.getGPIOForButton();
+            mButtonGpio = manager.openGpio(buttonPin);
+            mButtonGpio.setDirection(Gpio.DIRECTION_IN);
+            mButtonGpio.setActiveType(Gpio.ACTIVE_HIGH);
+            mButtonGpio.setEdgeTriggerType(Gpio.EDGE_FALLING);
+
+            Log.i(TAG,"Gonna go register for button");
+            mButtonGpio.registerGpioCallback(new GpioCallback() {
+                @Override
+                public boolean onGpioEdge(Gpio gpio) {
+                    Log.i(TAG, "Button pressed");
+                    switch(intervalBetweenBlink){
+                        case INTERVAL_2s:
+                            intervalBetweenBlink = 1000;
+                            Log.i(TAG,"Blink in 1s");
+                            break;
+
+                        case INTERVAL_1s:
+                            intervalBetweenBlink = 500;
+                            Log.i(TAG,"Blink in 0.5s");
+                            break;
+
+                        case INTERVAL_05s:
+                            intervalBetweenBlink = 2000;
+                            Log.i(TAG,"Blink in 2s");
+                            break;
+                        default:
+                            throw new IllegalStateException("State is incorrect");
+                    }
+                    return true;
+                }
+            });
+
             String ledPinR = BoardDefaults.getGPIOForLedR();
 //          Config for Led, output, high
             mLedGpioR = manager.openGpio(ledPinR);
@@ -105,21 +144,21 @@ public class MainActivity extends Activity {
                         mLedStateB = true;
                         mLedStateG = true;
                         mLedState = LED_GREEN;
-                        Log.d(TAG, "Led Red");
+//                        Log.d(TAG, "Led Red");
                         break;
                     case LED_GREEN:
                         mLedStateG = false;
                         mLedStateB = true;
                         mLedStateR = true;
                         mLedState = LED_BLUE;
-                        Log.d(TAG, "Led Green");
+//                        Log.d(TAG, "Led Green");
                         break;
                     case LED_BLUE:
                         mLedStateB = false;
                         mLedStateR = true;
                         mLedStateG = true;
                         mLedState = LED_RED;
-                        Log.d(TAG, "Led blue");
+//                        Log.d(TAG, "Led blue");
                         break;
                     default:
                         break;
@@ -128,7 +167,7 @@ public class MainActivity extends Activity {
                 mLedGpioB.setValue(mLedStateB);
                 mLedGpioG.setValue(mLedStateG);
 
-                mHandler.postDelayed(mBlinkRunnable, INTERVAL_BETWEEN_BLINKS_MS);
+                mHandler.postDelayed(mBlinkRunnable, intervalBetweenBlink);
             } catch (IOException e) {
                 Log.e(TAG, "Error on PeripheralIO API", e);
             }
