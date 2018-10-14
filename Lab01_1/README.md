@@ -1,7 +1,7 @@
  # Exercise 1.1
  Using three pins to control an RGB LED displaying in different colors.
  
- ## Authors
+ ## Author
  * **Tui Nhat Quang _ 1512664**
  ## Getting Started
  
@@ -11,11 +11,15 @@ In this exercise, we will use RGB Led Common Cathode, with I is the common pin.
 
  ### Pre-requisites
 1 LED
+
 1 resistor
+
 2 Jumper Wires
+
 1 Breadboard
 
 **GPIO Connection Diagram**
+
  ![N|Connection](https://github.com/lefeno/lab_iot/blob/vinh/Images/%5B1.1%5D%20Diagram.png)
  
 **GPIO Connection Table:**
