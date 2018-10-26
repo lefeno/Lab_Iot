@@ -10,7 +10,7 @@ This repository contains the source code of the assignment that required to be d
 
 This assignment are meant to be compiled on Android Studio and ran on Raspberry Pi 3.
 
-## Assignemnt
+## Assignment
 
 Your group task in this week is to create an Android application running on Raspberry Pi 3 to:
 - Write blocks of data to an RFID card including
